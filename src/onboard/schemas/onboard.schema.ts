@@ -15,6 +15,15 @@ export class User {
 
   @Prop()
   mobile_no:string
+
+  @Prop({ default: Date.now })
+  created_on?: Date;
+
+  @Prop({ default: Date.now })
+  updated_on?: Date;
+
+  @Prop({ default: false })
+  is_deleted?: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
