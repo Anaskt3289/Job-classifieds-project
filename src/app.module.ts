@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OnboardModule } from './onboard/onboard.module';
+import { JobModule } from './Jobs/job.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { OnboardModule } from './onboard/onboard.module';
     }),
 
     OnboardModule,
+    JobModule
   ],
   controllers: [AppController],
   providers: [AppService],
