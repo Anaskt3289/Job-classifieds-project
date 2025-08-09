@@ -17,11 +17,11 @@ export class CreateJobDto {
     @IsOptional()
     salary?: string;
 
-    @IsNotEmpty()
-    job_type: string;
+    @IsOptional()
+    job_type?: string;
 
-    @IsNotEmpty()
-    experience_required: string;
+    @IsOptional()
+    experience_required?: string;
 
     @IsOptional()
     skills?: string;

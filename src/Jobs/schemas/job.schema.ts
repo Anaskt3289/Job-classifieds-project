@@ -20,10 +20,10 @@ export class Jobs {
   salary?:string
 
   @Prop()
-  job_type:string
+  job_type?:string
 
   @Prop()
-  experience_required:string
+  experience_required?:string
 
   @Prop()
   skills?:string
