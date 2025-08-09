@@ -12,7 +12,7 @@ export class JobRepository {
   }
 
   async find(filterQuery: any) {
-    return await this.jobModel.find(filterQuery)
+    return await this.jobModel.find(filterQuery).sort({ _id: -1 })
   }
 
   async create(data: Jobs) {
@@ -25,7 +25,7 @@ export class JobRepository {
   }
 
   async findWithPagination(filterQuery: any, skip: number, limit: number) {
-    return await this.jobModel.find(filterQuery).skip(skip).limit(limit);
+    return await this.jobModel.find(filterQuery).sort({ _id: -1 }).skip(skip).limit(limit);
   }
 
   async count(filterQuery: any) {
