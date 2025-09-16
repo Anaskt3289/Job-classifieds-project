@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, UnprocessableEntityException } from '@nestjs/common';
 import { SignupDto } from './dto/signup.dto'
 import { LoginDto } from './dto/login.dto';
 import { User } from './schemas/onboard.schema';
@@ -16,6 +16,8 @@ export class OnboardService {
   async signup(signupdata: SignupDto) {
     let { fullname, email, password, mobile_no } = signupdata
     try {
+      let userExist = await this.onboardRepository.findOne({ email })
+      if(userExist) throw new UnprocessableEntityException("Email already registered , please login using credentials.")
       password = password && await bcrypt.hash(password, 10);
       let newUser = await this.onboardRepository.create({
         fullname,
@@ -24,15 +26,25 @@ export class OnboardService {
         mobile_no,
       })
       if (newUser) {
+        const payload = {
+          user_id: newUser._id,
+          email: newUser.email,
+          fullname: newUser.fullname,
+        };
+        const token = this.jwtService.sign(payload);
         return {
           status: 200,
           message: "Successfully registered the user.",
-          resultSet: newUser
+          resultSet: newUser,
+          token
         }
       }
     } catch (err) {
       console.log("error in signup function >>>", err);
-
+      throw new HttpException(
+        (err.response && err.response.message) || err.message || 'Failed to register the user.',
+        err.status || 0,
+      );
     }
   }
 
@@ -57,22 +69,17 @@ export class OnboardService {
             token
           }
         } else {
-          return {
-            status: 204,
-            message: "Invalid Password.",
-            resultSet: {}
-          }
+         throw new UnprocessableEntityException(`Invalid Password`);
         }
       } else {
-        return {
-          status: 404,
-          message: "Email not registered.",
-          resultSet: {}
-        }
+        throw new UnprocessableEntityException(`Email ${email} is not registered, please register and continue.`);
       }
     } catch (err) {
       console.log('error in login function >>>', err);
-
+      throw new HttpException(
+        (err.response && err.response.message) || err.message || 'Login unsuccessfull.',
+        err.status || 0,
+      );
     }
 
   }

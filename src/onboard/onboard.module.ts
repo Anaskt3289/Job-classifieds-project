@@ -6,6 +6,8 @@ import { User, UserSchema } from './schemas/onboard.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
 
 
 @Module({
@@ -19,7 +21,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   }),
   ],
-  controllers: [OnboardController],
-  providers: [OnboardService, OnboardRepository],
+  controllers: [OnboardController, UserController],
+  providers: [OnboardService, OnboardRepository, UserService],
 })
 export class OnboardModule { }

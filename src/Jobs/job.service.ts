@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, UnprocessableEntityException, NotFoundException } from '@nestjs/common';
 import { UpdateJobDto } from './dto/update-job.dto'
 import { CreateJobDto } from './dto/create-job.dto';
 import { Jobs } from './schemas/job.schema';
@@ -23,10 +23,10 @@ export class JobService {
       }
     } catch (err) {
       console.log("error in createJob function >>>", err);
-      return {
-        status: 0,
-        message: err?.message
-      }
+      throw new HttpException(
+        (err.response && err.response.message) || err.message || 'Failed to register the job.',
+        err.status || 0,
+      );
     }
   }
 
@@ -53,10 +53,10 @@ export class JobService {
       }
     } catch (err) {
       console.log('error in updateJob function >>>', err);
-      return {
-        status: 0,
-        message: err?.message
-      }
+      throw new HttpException(
+        (err.response && err.response.message) || err.message || 'Failed to update job details.',
+        err.status || 0,
+      );
     }
   }
 
@@ -94,17 +94,14 @@ export class JobService {
           total_pages : Math.ceil(total_records / limit),
         }
       } else {
-        return {
-          status: 0,
-          message: "No records found."
-        }
+        throw new NotFoundException('No records found.');
       }
     } catch (err) {
       console.log('error in updateJob function >>>', err);
-      return {
-        status: 0,
-        message: err?.message
-      }
+      throw new HttpException(
+        (err.response && err.response.message) || err.message || 'Failed to fetch job.',
+        err.status || 0,
+      );
     }
 
   }

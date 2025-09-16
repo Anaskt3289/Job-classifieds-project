@@ -20,7 +20,7 @@ export class OnboardRepository {
     return await newUser.save()
   }
 
-  async findOneAndUpdate(userFilterQuery:any, user:User){
+  async findOneAndUpdate(userFilterQuery:any, user){
     return await this.userModel.findOneAndUpdate(userFilterQuery, user)
   }
 }
