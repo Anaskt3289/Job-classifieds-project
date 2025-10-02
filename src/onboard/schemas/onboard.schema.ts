@@ -24,6 +24,12 @@ export class User {
 
   @Prop({ default: false })
   is_deleted?: boolean;
+
+  @Prop()
+  otp?:string
+
+  @Prop()
+  otp_last_updated_on?:Date
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

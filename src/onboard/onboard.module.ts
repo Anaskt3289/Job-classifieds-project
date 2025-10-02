@@ -8,7 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
-
+import { MailService } from 'src/common/mail.service';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
@@ -22,6 +22,6 @@ import { UserService } from './user.service';
   }),
   ],
   controllers: [OnboardController, UserController],
-  providers: [OnboardService, OnboardRepository, UserService],
+  providers: [OnboardService, OnboardRepository, UserService, MailService],
 })
 export class OnboardModule { }
