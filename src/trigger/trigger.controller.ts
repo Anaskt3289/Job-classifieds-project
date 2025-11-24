@@ -7,7 +7,7 @@ import { TriggerService } from './trigger.service';
 export class TriggerController {
   constructor(private readonly triggerService: TriggerService) {}
 
-  @Get()
+  @Get('/server/status')
   @ApiOperation({ summary: 'Get trigger status' })
   @ApiResponse({ status: 200, description: 'Returns success status' })
   getTriggerStatus() {
