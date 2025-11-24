@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OnboardModule } from './onboard/onboard.module';
 import { JobModule } from './Jobs/job.module';
+import { TriggerModule } from './trigger/trigger.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { JobModule } from './Jobs/job.module';
     }),
 
     OnboardModule,
-    JobModule
+    JobModule,
+    TriggerModule
   ],
   controllers: [AppController],
   providers: [AppService],
